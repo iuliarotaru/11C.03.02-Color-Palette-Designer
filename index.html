@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Color Palette Designer</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="grid">
+    <label id="harmony-changer" class="harmony-changer">
+      Choose harmony
+      <select name="harmony" id="harmony">
+        <option value="complementary" class="complementary"
+          >Complementary</option
+        >
+        <option value="analogous" class="analogous">Analogous</option>
+        <option value="monochromatic" class="monochromatic"
+          >Monochromatic</option
+        >
+        <option value="triad" class="triad">Triad</option>
+        <option value="compound" class="compound">Compound</option>
+        <option value="shades" class="shades">Shades</option>
+      </select>
+    </label>
+    <label class="base-color">
+      Choose base color:
+      <input type="color" value="" id="picker" />
+    </label>
+
+    <div class="section1">
+      <div class="color1 box"></div>
+      <p class="color1Hex"></p>
+      <p class="color1Rgb"></p>
+      <p class="color1Hsl"></p>
+    </div>
+    <div class="section2">
+      <div class="color2 box"></div>
+      <p class="color2Hex"></p>
+      <p class="color2Rgb"></p>
+      <p class="color2Hsl"></p>
+    </div>
+    <div class="section3">
+      <div class="selectedBaseColor box"></div>
+      <p class="colorHex"></p>
+      <p class="colorRgb"></p>
+      <p class="colorHsl"></p>
+    </div>
+    <div class="section4">
+      <div class="color3 box"></div>
+      <p class="color3Hex"></p>
+      <p class="color3Rgb"></p>
+      <p class="color3Hsl"></p>
+    </div>
+    <div class="section5">
+      <div class="color4 box"></div>
+      <p class="color4Hex"></p>
+      <p class="color4Rgb"></p>
+      <p class="color4Hsl"></p>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

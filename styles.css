@@ -1,0 +1,32 @@
+.box {
+  height: 200px;
+  width: 200px;
+  margin-top: 20px;
+  border: 1px solid black;
+}
+.grid {
+  display: grid;
+  grid-template-rows: 100px auto;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 10px;
+}
+.section1 {
+  grid-row: 2/3;
+  grid-column: 1/2;
+}
+.section2 {
+  grid-row: 2/3;
+  grid-column: 2/3;
+}
+.section3 {
+  grid-row: 2/3;
+  grid-column: 3/4;
+}
+.section4 {
+  grid-row: 2/3;
+  grid-column: 4/5;
+}
+.section5 {
+  grid-row: 2/3;
+  grid-column: 5/6;
+}
