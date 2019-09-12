@@ -1,7 +1,8 @@
 "use strict";
+
 const harmonySelect = document.querySelector("#harmony");
 window.addEventListener("load", start);
-//after select color, show color
+//function to show color after you select it
 function start() {
   let colorPicker = document.querySelector("#picker");
   colorPicker.value = "#00f933";
@@ -19,19 +20,18 @@ function showColor() {
   showHsl(colorValue, ".colorHsl");
   let selected = document.querySelector("#harmony").value;
   if (selected == "complementary") {
-    console.log("complementary");
+    displayColors(colorValue, complementaryColor);
   } else if (selected == "analogous") {
-    showAnalogousColor(colorValue);
+    displayColors(colorValue, analogousColor);
   } else if (selected == "monochromatic") {
-    console.log("monochromatic");
+    displayColors(colorValue, monochromaticColor);
   } else if (selected == "triad") {
-    console.log("triad");
+    displayColors(colorValue, triadColor);
   } else if (selected == "compound") {
-    console.log("compound");
+    displayColors(colorValue, compoundColor);
   } else if (selected == "shades") {
-    console.log("shades");
+    displayColors(colorValue, shadesColor);
   }
-  //showComplementaryColor(colorValue);
 }
 
 function showHex(color, colorClass) {
@@ -168,7 +168,7 @@ function parseHSL(str) {
   const l = Number(hsl[2]);
   return [h, s, l];
 }
-
+function complementaryColor(baseColor) {}
 function analogousColor(baseColor) {
   let hslBaseColor = RgbToHsl(baseColor);
   const [h, s, l] = parseHSL(hslBaseColor);
@@ -179,8 +179,22 @@ function analogousColor(baseColor) {
 
   return [hsl1, hsl2, hsl3, hsl4];
 }
-function showAnalogousColor(color) {
-  let hslArray = analogousColor(color);
+function monochromaticColor(baseColor) {
+  let hslBaseColor = RgbToHsl(baseColor);
+  const [h, s, l] = parseHSL(hslBaseColor);
+  let hsl1 = { h, s, l };
+  let hsl2 = { h, s, l };
+  let hsl3 = { h, s, l };
+  let hsl4 = { h, s, l };
+
+  return [hsl1, hsl2, hsl3, hsl4];
+}
+function triadColor(baseColor) {}
+function compoundColor(baseColor) {}
+function shadesColor(baseColor) {}
+
+function displayColors(color, harmony) {
+  let hslArray = harmony(color);
   let hsl;
   let hex;
   for (let i = 0; i < 4; i++) {
