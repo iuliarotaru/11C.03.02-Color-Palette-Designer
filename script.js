@@ -105,6 +105,9 @@ function RgbToHsl(H) {
   s = +(s * 100).toFixed(1);
   l = +(l * 100).toFixed(1);
 
+  s = Math.round(s);
+  l = Math.round(l);
+
   return +h + ", " + s + "%, " + l + "%";
 }
 
@@ -168,7 +171,16 @@ function parseHSL(str) {
   const l = Number(hsl[2]);
   return [h, s, l];
 }
-function complementaryColor(baseColor) {}
+function complementaryColor(baseColor) {
+  let hslBaseColor = RgbToHsl(baseColor);
+  const [h, s, l] = parseHSL(hslBaseColor);
+  let hsl1 = { h: h, s, l: (l + 40) % 100 };
+  let hsl2 = { h: h, s, l: (l + 20) % 100 };
+  let hsl3 = { h: (h + 180) % 360, s, l: (l + 20) % 100 };
+  let hsl4 = { h: (h + 180) % 360, s, l };
+
+  return [hsl1, hsl2, hsl3, hsl4];
+}
 function analogousColor(baseColor) {
   let hslBaseColor = RgbToHsl(baseColor);
   const [h, s, l] = parseHSL(hslBaseColor);
@@ -182,16 +194,46 @@ function analogousColor(baseColor) {
 function monochromaticColor(baseColor) {
   let hslBaseColor = RgbToHsl(baseColor);
   const [h, s, l] = parseHSL(hslBaseColor);
-  let hsl1 = { h, s, l };
-  let hsl2 = { h, s, l };
-  let hsl3 = { h, s, l };
-  let hsl4 = { h, s, l };
+  let hsl1 = { h, s, l: (l - 20) % 100 };
+  console.log(hsl1);
+
+  let hsl2 = { h, s, l: (l - 10) % 100 };
+  console.log(hsl2);
+  let hsl3 = { h, s, l: (l + 10) % 100 };
+  let hsl4 = { h, s, l: (l + 20) % 100 };
 
   return [hsl1, hsl2, hsl3, hsl4];
 }
-function triadColor(baseColor) {}
-function compoundColor(baseColor) {}
-function shadesColor(baseColor) {}
+function triadColor(baseColor) {
+  let hslBaseColor = RgbToHsl(baseColor);
+  const [h, s, l] = parseHSL(hslBaseColor);
+  let hsl1 = { h: (h + 120) % 360, s, l: (l + 20) % 100 };
+  let hsl2 = { h: (h + 120) % 360, s, l };
+  let hsl3 = { h: (h + 240) % 360, s, l };
+  let hsl4 = { h: (h + 240) % 360, s, l: (l - 20) % 100 };
+
+  return [hsl1, hsl2, hsl3, hsl4];
+}
+function compoundColor(baseColor) {
+  let hslBaseColor = RgbToHsl(baseColor);
+  const [h, s, l] = parseHSL(hslBaseColor);
+  let hsl1 = { h: (h + 180) % 360, s, l }; //complementary color
+  let hsl2 = { h: (h + 160) % 360, s, l }; //adjacent to complementary color
+  let hsl3 = { h: (h + 20) % 360, s, l }; //adjacent to complementary color
+  let hsl4 = { h: (h + 20) % 360, s, l: (l - 20) % 100 }; //shade of adjacent to base color
+
+  return [hsl1, hsl2, hsl3, hsl4];
+}
+function shadesColor(baseColor) {
+  let hslBaseColor = RgbToHsl(baseColor);
+  const [h, s, l] = parseHSL(hslBaseColor);
+  let hsl1 = { h, s: (s - 20) % 100, l };
+  let hsl2 = { h, s: (s - 10) % 100, l };
+  let hsl3 = { h, s: (s + 10) % 100, l };
+  let hsl4 = { h, s: (s + 20) % 100, l };
+
+  return [hsl1, hsl2, hsl3, hsl4];
+}
 
 function displayColors(color, harmony) {
   let hslArray = harmony(color);
