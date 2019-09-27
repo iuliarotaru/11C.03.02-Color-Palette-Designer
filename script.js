@@ -1,8 +1,10 @@
 "use strict";
-
+//Global variables
+//--------------------------------------------------
 const harmonySelect = document.querySelector("#harmony");
+
 window.addEventListener("load", start);
-//function to show color after you select it
+
 function start() {
   let colorPicker = document.querySelector("#picker");
   colorPicker.value = "#00f933";
@@ -10,8 +12,8 @@ function start() {
   colorPicker.addEventListener("input", showColor);
   harmonySelect.addEventListener("input", showColor);
 }
-
 //display color that we choose, plus hex, rgb and hsl
+//---------------------------------------------------
 function showColor() {
   let colorValue = document.querySelector("#picker").value;
   document.querySelector(".selectedBaseColor").style.background = colorValue;
@@ -38,13 +40,27 @@ function showHex(color, colorClass) {
   document.querySelector(colorClass).innerHTML = color;
 }
 function showRgb(color, colorClass) {
-  document.querySelector(colorClass).innerHTML = "RGB(" + hexToRgb(color) + ")";
+  document.querySelector(colorClass).innerHTML = "RGB(" + HexToRGB(color) + ")";
 }
 function showHsl(color, colorClass) {
-  document.querySelector(colorClass).innerHTML = "HSL(" + RgbToHsl(color) + ")";
+  document.querySelector(colorClass).innerHTML = "HSL(" + RGBToHSL(color) + ")";
+}
+function displayColors(color, harmony) {
+  let hslArray = harmony(color);
+  let hsl;
+  let hex;
+  for (let i = 0; i < 4; i++) {
+    hsl = hslArray[i];
+    hex = HSLToHex(hsl);
+    document.querySelector(".color" + (i + 1)).style.background = hex;
+    showHex(hex, ".color" + (i + 1) + "Hex");
+    showHsl(hex, ".color" + (i + 1) + "Hsl");
+    showRgb(hex, ".color" + (i + 1) + "Rgb");
+  }
 }
 //Convert HEX to RGB
-function hexToRgb(h) {
+//-----------------------------------------------------
+function HexToRGB(h) {
   let r = 0,
     g = 0,
     b = 0;
@@ -64,8 +80,9 @@ function hexToRgb(h) {
   return +r + "," + +g + "," + +b;
 }
 //Convert RGB to HSL
-function RgbToHsl(H) {
-  let rgb = hexToRgb(H); //rgb is 3 numbers separated by commas
+//-----------------------------------------------------
+function RGBToHSL(H) {
+  let rgb = HexToRGB(H); //rgb is 3 numbers separated by commas
   let rgbValues = rgb.split(","); //rgbValues has the three numbers that we need
 
   //Make r, g, and b fractions of 1
@@ -112,6 +129,7 @@ function RgbToHsl(H) {
 }
 
 //convert HSL to HEX
+//--------------------------------------------------
 function HSLToHex(hsl) {
   let h = hsl.h;
   let s = hsl.s;
@@ -164,6 +182,7 @@ function HSLToHex(hsl) {
   return "#" + r + g + b;
 }
 //function to break hsl into h,s,l numbers
+//-----------------------------------------------
 function parseHSL(str) {
   let hsl = str.replace(/[^\d,.]/g, "").split(","); // strip non digits ('%')
   const h = Number(hsl[0]); // convert to number
@@ -171,8 +190,10 @@ function parseHSL(str) {
   const l = Number(hsl[2]);
   return [h, s, l];
 }
+//function to calculate complementary color
+//-----------------------------------------------
 function complementaryColor(baseColor) {
-  let hslBaseColor = RgbToHsl(baseColor);
+  let hslBaseColor = RGBToHSL(baseColor);
   const [h, s, l] = parseHSL(hslBaseColor);
   let hsl1 = { h: h, s, l: (l + 40) % 100 };
   let hsl2 = { h: h, s, l: (l + 20) % 100 };
@@ -181,8 +202,10 @@ function complementaryColor(baseColor) {
 
   return [hsl1, hsl2, hsl3, hsl4];
 }
+//function to calculate analogous color
+//------------------------------------------------
 function analogousColor(baseColor) {
-  let hslBaseColor = RgbToHsl(baseColor);
+  let hslBaseColor = RGBToHSL(baseColor);
   const [h, s, l] = parseHSL(hslBaseColor);
   let hsl1 = { h: (h - 40) % 360, s, l };
   let hsl2 = { h: (h - 20) % 360, s, l };
@@ -191,8 +214,10 @@ function analogousColor(baseColor) {
 
   return [hsl1, hsl2, hsl3, hsl4];
 }
+//function to calculate monochromatic color
+//------------------------------------------------
 function monochromaticColor(baseColor) {
-  let hslBaseColor = RgbToHsl(baseColor);
+  let hslBaseColor = RGBToHSL(baseColor);
   const [h, s, l] = parseHSL(hslBaseColor);
   let hsl1 = { h, s, l: (l - 20) % 100 };
   console.log(hsl1);
@@ -204,8 +229,10 @@ function monochromaticColor(baseColor) {
 
   return [hsl1, hsl2, hsl3, hsl4];
 }
+//function to calculate triad color
+//-------------------------------------------------
 function triadColor(baseColor) {
-  let hslBaseColor = RgbToHsl(baseColor);
+  let hslBaseColor = RGBToHSL(baseColor);
   const [h, s, l] = parseHSL(hslBaseColor);
   let hsl1 = { h: (h + 120) % 360, s, l: (l + 20) % 100 };
   let hsl2 = { h: (h + 120) % 360, s, l };
@@ -214,8 +241,10 @@ function triadColor(baseColor) {
 
   return [hsl1, hsl2, hsl3, hsl4];
 }
+//function to calculate compound color
+//---------------------------------------------------
 function compoundColor(baseColor) {
-  let hslBaseColor = RgbToHsl(baseColor);
+  let hslBaseColor = RGBToHSL(baseColor);
   const [h, s, l] = parseHSL(hslBaseColor);
   let hsl1 = { h: (h + 180) % 360, s, l }; //complementary color
   let hsl2 = { h: (h + 160) % 360, s, l }; //adjacent to complementary color
@@ -224,8 +253,10 @@ function compoundColor(baseColor) {
 
   return [hsl1, hsl2, hsl3, hsl4];
 }
+//function to calculate shades of a color
+//---------------------------------------------------
 function shadesColor(baseColor) {
-  let hslBaseColor = RgbToHsl(baseColor);
+  let hslBaseColor = RGBToHSL(baseColor);
   const [h, s, l] = parseHSL(hslBaseColor);
   let hsl1 = { h, s: (s - 20) % 100, l };
   let hsl2 = { h, s: (s - 10) % 100, l };
@@ -233,18 +264,4 @@ function shadesColor(baseColor) {
   let hsl4 = { h, s: (s + 20) % 100, l };
 
   return [hsl1, hsl2, hsl3, hsl4];
-}
-
-function displayColors(color, harmony) {
-  let hslArray = harmony(color);
-  let hsl;
-  let hex;
-  for (let i = 0; i < 4; i++) {
-    hsl = hslArray[i];
-    hex = HSLToHex(hsl);
-    document.querySelector(".color" + (i + 1)).style.background = hex;
-    showHex(hex, ".color" + (i + 1) + "Hex");
-    showHsl(hex, ".color" + (i + 1) + "Hsl");
-    showRgb(hex, ".color" + (i + 1) + "Rgb");
-  }
 }

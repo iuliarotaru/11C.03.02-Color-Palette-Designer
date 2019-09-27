@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!--Meta tags-->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <!--Title-->
     <title>Color Palette Designer</title>
+
+    <!--External Links-->
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body class="grid">
+    <!--Choose harmony area-->
     <label id="harmony-changer" class="harmony-changer">
       Choose harmony
       <select name="harmony" id="harmony">
@@ -23,11 +29,13 @@
         <option value="shades" class="shades">Shades</option>
       </select>
     </label>
+
+    <!--Choose base color area-->
     <label class="base-color">
       Choose base color:
       <input type="color" value="" id="picker" />
     </label>
-
+    <!--Display the 5 colors area-->
     <div class="section1">
       <div class="color1 box"></div>
       <p class="color1Hex"></p>

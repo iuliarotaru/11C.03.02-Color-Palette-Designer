@@ -1,14 +1,19 @@
+/*---Style the boxex in which the colors are displayed ---*/
 .box {
   height: 200px;
   width: 200px;
   margin-top: 20px;
   border: 1px solid black;
 }
+/*---Style grid---*/
 .grid {
   display: grid;
   grid-template-rows: 100px auto;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 10px;
+}
+.harmony-changer {
+  grid-row: 1/2;
 }
 .section1 {
   grid-row: 2/3;
